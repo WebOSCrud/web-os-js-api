@@ -83,7 +83,7 @@ export interface Menu {
     label: string,
     divider?: boolean,
     enable?: boolean,
-    icon?: boolean,
+    icon?: string,
     suMenu?: Menu[],
     click?: () => void,
 }

@@ -1,8 +1,3 @@
-//desktop 需要去实现的 os.js.api.js
-// 应该在最开始就引入 os.js.api.js
-// <script src="/os/api/os.js.api.js"></script>
-//
-//桌面使用 iframe 创建一个 wap 窗口时
 
 import {Menu, OsApi, WapWindow, WindowOption} from "./os.type";
 import DesktopOsApi from "./desktop/DesktopOsApi";
@@ -27,6 +22,10 @@ if (!desktop) {
         throw new Error("不处于desktop 环境 windowIdStr==null")
     }
     windowId = Number.parseInt(windowIdStr);
+    //隐藏菜单
+    window.addEventListener("mouseup",(event:MouseEvent)=>{
+        window.osApi.hideMenu();
+    },true)
 }
 console.log("desktop:", desktop)
 if (desktop) {
