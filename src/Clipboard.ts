@@ -16,9 +16,16 @@ export default class ClipboardImpl implements Clipboard {
     get data(): any {
         return this._data;
     }
+    set data(data:any){
+        this._data=data;
+    }
 
     get type(): any {
         return this._type;
     }
+    set type(type:ClipboardType){
+        this._type=type;
+    }
 }
+
 

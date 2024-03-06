@@ -4,6 +4,7 @@ import DesktopOsApi from "./desktop/DesktopOsApi";
 import WapOsApi from "./wap/WapOsApi";
 
 export * from "./os.type";
+export * from "./api/index"
 
 declare global {
     interface Window {

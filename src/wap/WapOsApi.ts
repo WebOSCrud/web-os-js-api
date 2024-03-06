@@ -1,4 +1,5 @@
-import {Clipboard, Menu, OsApi, WapWindow, WindowOption} from "../os.type";
+import {Clipboard, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
+import {FileOpenWapInfoListVo} from "../api/os.vo.type";
 
 
 export default class OsApiImpl implements OsApi {
@@ -14,8 +15,8 @@ export default class OsApiImpl implements OsApi {
         return window.top.osApi;
     }
 
-    creatWindow(op: WindowOption): WapWindow {
-        return this.getOsApiImpl().creatWindow(op);
+    creatWindow(op: WindowOption,args?:any): WapWindow {
+        return this.getOsApiImpl().creatWindow(op,args);
     }
 
     getWindow(id: number): WapWindow {
@@ -26,19 +27,30 @@ export default class OsApiImpl implements OsApi {
         this.getOsApiImpl().hideMenu();
     }
 
-    showMenu(menus: Menu[], event:MouseEvent): void {
+    showMenu(menus: Menu[], event: MouseEvent): void {
         let frameElement = window.frameElement;
         // @ts-ignore
         let boundingClientRect = frameElement.getBoundingClientRect();
         // @ts-ignore
-        window.top.desktopEnv.showMenu(menus,boundingClientRect.x+event.x,boundingClientRect.y+event.y);
+        window.top.desktopEnv.showMenu(menus, boundingClientRect.x + event.x, boundingClientRect.y + event.y);
     }
 
     currentWindow(): WapWindow {
         return this.getWindow(this._windowId);
     }
 
-    get fileClipboard():Clipboard{
-        return this.getOsApiImpl().fileClipboard;
+    fileClipboard(): Clipboard {
+        return this.getOsApiImpl().fileClipboard();
+    }
+
+    openFile(filePath: string): void {
+        this.getOsApiImpl().openFile(filePath);
+    }
+
+    openFileMode(filePath: string) {
+        this.getOsApiImpl().openFileMode(filePath);
+    }
+    messageBox(op: MessageBoxOption,call?:(confirm:boolean)=>void): void {
+        this.getOsApiImpl().messageBox(op,call);
     }
 }

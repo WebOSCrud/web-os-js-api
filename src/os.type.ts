@@ -1,3 +1,8 @@
+import {FileOpenWapInfoListVo} from "./api/os.vo.type";
+
+
+
+export type WindowType="normal" | "tool"
 /**
  * 创建窗口的参数
  */
@@ -10,6 +15,8 @@ export interface WindowOption {
      * 标题
      */
     title?: string
+
+    windowType?:WindowType,
     /**
      * 窗口图标
      */
@@ -84,6 +91,7 @@ export interface Menu {
     divider?: boolean,
     enable?: boolean,
     icon?: string,
+    show?:boolean,
     suMenu?: Menu[],
     click?: () => void,
 }
@@ -109,7 +117,28 @@ export interface MessageBoxOption {
 
 export type BtnType = "ok" | "cancel" | "close"
 
+export type WindowEventType= 'max'|'min'|'close' | 'focus' |' unfocus' | string
+export class WindowEvent{
 
+    private _defaultPrevented:boolean=false;
+
+    private readonly _data:any;
+
+    constructor(data?: any) {
+        this._data = data;
+    }
+
+    preventDefault(){
+        this._defaultPrevented=true;
+    }
+    get defaultPrevented():boolean{
+        return this._defaultPrevented;
+    }
+    get data(){
+        return this._data;
+    }
+}
+export type WindowEvenListener=(event:WindowEvent)=>void;
 export interface WapWindow {
     url: string,
     title: string
@@ -161,6 +190,16 @@ export interface WapWindow {
     x: number;
 
     y: number;
+
+    args():any;
+
+    windowType():WindowType;
+
+    addEventListener(type:WindowEventType,listener:WindowEvenListener):void;
+
+    removeEventListener(type:WindowEventType,listener:WindowEvenListener):void;
+
+    pushEvent(type:WindowEventType,event:WindowEvent):void;
 }
 
 export interface Clipboard {
@@ -172,7 +211,7 @@ export interface Clipboard {
 export type ClipboardType = "cut" | "copy" | null;
 
 export interface OsApi {
-    creatWindow(op: WindowOption): WapWindow
+    creatWindow(op: WindowOption,args?:any): WapWindow
 
     getWindow(id: number): WapWindow
 
@@ -180,7 +219,21 @@ export interface OsApi {
 
     hideMenu(): void
 
-    currentWindow(): WapWindow;
+    currentWindow(): WapWindow
 
-    fileClipboard: Clipboard
+    fileClipboard(): Clipboard
+
+    openFile(filePath:string):void
+
+    openFileMode(filePath:string):void
+
+    messageBox(op: MessageBoxOption,call?:(confirm:boolean)=>void ):void
+
+}
+
+export interface MessageBoxOption{
+    type:'info'| 'warn'| 'error',
+    title?:string,
+    icon?:string,
+    msg:string
 }
