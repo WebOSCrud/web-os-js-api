@@ -44,8 +44,8 @@ export default class DesktopOsApi implements OsApi {
         })
     }
 
-    messageBox(op: MessageBoxOption,call?:(confirm:boolean)=>void): void {
-        return window.desktopEnv.messageBox(op,call);
+    messageBox(op: MessageBoxOption): Promise<boolean> {
+        return window.desktopEnv.messageBox(op);
     }
 
     openFileMode(filePath: string): void {

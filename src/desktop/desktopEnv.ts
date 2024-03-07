@@ -11,7 +11,7 @@ export  interface DesktopEnv{
     getWindow(id:number):WapWindow
     showMenu(menus:Menu[],x:number,y:number):void
     hideMenu():void
-    messageBox(op: MessageBoxOption,call?:(confirm:boolean)=>void):void
+    messageBox(op: MessageBoxOption): Promise<boolean>
     openFileMode(wapList:FileOpenWapInfoListVo):void
 }
 

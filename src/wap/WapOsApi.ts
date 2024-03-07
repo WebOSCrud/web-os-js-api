@@ -50,7 +50,7 @@ export default class OsApiImpl implements OsApi {
     openFileMode(filePath: string) {
         this.getOsApiImpl().openFileMode(filePath);
     }
-    messageBox(op: MessageBoxOption,call?:(confirm:boolean)=>void): void {
-        this.getOsApiImpl().messageBox(op,call);
+    messageBox(op: MessageBoxOption): Promise<boolean>{
+        return this.getOsApiImpl().messageBox(op);
     }
 }
