@@ -1,4 +1,4 @@
-import {Clipboard, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
+import {Clipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
 import {FileOpenWapInfoListVo} from "../api/os.vo.type";
 
 
@@ -27,7 +27,7 @@ export default class OsApiImpl implements OsApi {
         this.getOsApiImpl().hideMenu();
     }
 
-    showMenu(menus: Menu[], event: MouseEvent): void {
+    showMenu(menus: ContextMenu, event: MouseEvent): void {
         let frameElement = window.frameElement;
         // @ts-ignore
         let boundingClientRect = frameElement.getBoundingClientRect();
@@ -43,8 +43,8 @@ export default class OsApiImpl implements OsApi {
         return this.getOsApiImpl().fileClipboard();
     }
 
-    openFile(filePath: string): void {
-        this.getOsApiImpl().openFile(filePath);
+    openFile(filePath: string,wapId?:string,def?:boolean): void {
+        this.getOsApiImpl().openFile(filePath,wapId,def);
     }
 
     openFileMode(filePath: string) {

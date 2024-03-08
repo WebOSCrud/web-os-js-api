@@ -91,15 +91,28 @@ export interface WindowOption {
     background?: string
 }
 
-export interface Menu {
+export interface SubMenu {
     label: string,
     divider?: boolean,
     enable?: boolean,
     icon?: string,
     show?:boolean,
-    suMenu?: Menu[],
     click?: () => void,
 }
+export interface Menu extends SubMenu{
+    subMenu:SubMenu[]
+}
+export interface GroupMenu{
+    icon: string,
+    show?:boolean,
+    click?: () => void,
+    tip:string
+}
+export interface ContextMenu {
+    group:GroupMenu[],
+    menus:SubMenu[]
+}
+
 
 export interface MessageBoxOption {
     /**
@@ -316,7 +329,7 @@ export interface OsApi {
      * @param menus 菜单项
      * @param event 鼠标事件
      */
-    showMenu(menus: Menu[], event: MouseEvent): void
+    showMenu(menus: ContextMenu, event: MouseEvent): void
 
     /**
      * 隐藏菜单
@@ -337,7 +350,7 @@ export interface OsApi {
      * 打开一个文件
      * @param filePath 文件路径
      */
-    openFile(filePath:string):void
+    openFile(filePath:string,wapId?:string,def?:boolean):void
 
     /**
      * 文件打开方式

@@ -1,4 +1,4 @@
-import {Clipboard, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
+import {Clipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
 import ClipboardImpl from "../Clipboard";
 import * as  FileApi from "../api/file.api";
 import {FileOpenWapInfoListVo, ResponseBody, WapWindowOptionVo} from "../api/os.vo.type";
@@ -25,7 +25,7 @@ export default class DesktopOsApi implements OsApi {
         return window.desktopEnv.hideMenu();
     }
 
-    showMenu(menus: Menu[], event: MouseEvent): void {
+    showMenu(menus: ContextMenu, event: MouseEvent): void {
         return window.desktopEnv.showMenu(menus, event.x, event.y);
     }
 
@@ -33,12 +33,12 @@ export default class DesktopOsApi implements OsApi {
         return this._clipboard;
     }
 
-    openFile(filePath: string): void {
+    openFile(filePath: string,wapId?:string,def?:boolean): void {
         let that = this;
-        FileApi.getOpenWapWindowOption(filePath)
+        FileApi.openFile(filePath,wapId,def)
             .then((res: ResponseBody<WapWindowOptionVo>) => {
                 let data = res.data;
-                that.creatWindow(data);
+                that.creatWindow(data,{filePath:filePath});
             }).catch(err => {
             console.log(err)
         })

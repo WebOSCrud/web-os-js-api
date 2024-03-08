@@ -7,9 +7,9 @@ import {FileOpenWapInfoListVo, FileTypeVo, LoginForceVo, ResponseBody, UserVo, W
  * @param wapId
  * @param setDef
  */
-export function getOpenWapWindowOption(path: string, wapId?: string, setDef?: boolean): Promise<ResponseBody<WapWindowOptionVo>> {
-    return ajax.get("/file/open", {
-        path: path,
+export function openFile(path: string, wapId?: string, setDef?: boolean): Promise<ResponseBody<WapWindowOptionVo>> {
+    return ajax.post("/file/open", {
+        flePath: path,
         wapId: wapId,
         setDef: setDef,
     });
