@@ -1,8 +1,8 @@
-import {Clipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
-import ClipboardImpl from "../Clipboard";
+import {FileClipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
 import * as  FileApi from "../api/file.api";
 import {FileOpenWapInfoListVo, ResponseBody, WapWindowOptionVo} from "../api/os.vo.type";
 import ajax from "../api/ajax";
+import ClipboardImpl from "../Clipboard";
 
 
 
@@ -29,7 +29,7 @@ export default class DesktopOsApi implements OsApi {
         return window.desktopEnv.showMenu(menus, event.x, event.y);
     }
 
-    fileClipboard(): Clipboard {
+    fileClipboard(): FileClipboard {
         return this._clipboard;
     }
 

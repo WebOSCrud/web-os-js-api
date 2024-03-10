@@ -1,13 +1,15 @@
 import {FileOpenWapInfoListVo} from "./api/os.vo.type";
+import ClipboardImpl from "./Clipboard";
 
 
-export type HtmlString= string;
+export type HtmlString = string;
 /**
  * 窗口类型
  * normal 常规窗口
  * tool 没有最大化，最小化，不能改变窗口大小
  */
-export type WindowType="normal" | "tool"
+export type WindowType = "normal" | "tool"
+
 /**
  * 创建窗口的参数
  */
@@ -21,7 +23,7 @@ export interface WindowOption {
      */
     title?: string
 
-    windowType?:WindowType,
+    windowType?: WindowType,
     /**
      * 窗口图标
      */
@@ -96,21 +98,24 @@ export interface SubMenu {
     divider?: boolean,
     enable?: boolean,
     icon?: string,
-    show?:boolean,
+    show?: boolean,
     click?: () => void,
 }
-export interface Menu extends SubMenu{
-    subMenu:SubMenu[]
+
+export interface Menu extends SubMenu {
+    subMenu?: SubMenu[]
 }
-export interface GroupMenu{
+
+export interface GroupMenu {
     icon: string,
-    show?:boolean,
+    show?: boolean,
     click?: () => void,
-    tip:string
+    tip: string
 }
+
 export interface ContextMenu {
-    group:GroupMenu[],
-    menus:SubMenu[]
+    group: GroupMenu[],
+    menus: Menu[]
 }
 
 
@@ -151,16 +156,16 @@ export interface MessageBoxOption {
  * unfocus: 窗口失去焦点
  * string: 自定义事件
  */
-export type WindowEventType= 'max'|'min'|'close' | 'focus' |' unfocus' | string
+export type WindowEventType = 'max' | 'min' | 'close' | 'focus' | ' unfocus' | string
 
 /**
  * 窗口事件
  */
-export class WindowEvent{
+export class WindowEvent {
 
-    private _defaultPrevented:boolean=false;
+    private _defaultPrevented: boolean = false;
 
-    private readonly _data:any;
+    private readonly _data: any;
 
     constructor(data?: any) {
         this._data = data;
@@ -170,18 +175,20 @@ export class WindowEvent{
      * 阻止默认事件操作
      * 一般是 'max'|'min'|'close'
      */
-    preventDefault(){
-        this._defaultPrevented=true;
+    preventDefault() {
+        this._defaultPrevented = true;
     }
-    get defaultPrevented():boolean{
+
+    get defaultPrevented(): boolean {
         return this._defaultPrevented;
     }
-    get data(){
+
+    get data() {
         return this._data;
     }
 }
 
-export type WindowEvenListener=(event:WindowEvent)=>void;
+export type WindowEvenListener = (event: WindowEvent) => void;
 
 /**
  * wap 窗口属性
@@ -239,10 +246,12 @@ export interface WapWindow {
      * 执行窗口最大化
      */
     max(): void;
+
     /**
      * 执行窗口最小化
      */
     min(): void;
+
     /**
      * 执行窗口关闭
      */
@@ -265,41 +274,50 @@ export interface WapWindow {
     /**
      * 创建窗口时的 参数
      */
-    args():any;
+    args(): any;
 
     /**
      * 窗口类型
      */
-    windowType():WindowType;
+    windowType(): WindowType;
 
     /**
      * 添加窗口事件
      * @param type
      * @param listener
      */
-    addEventListener(type:WindowEventType,listener:WindowEvenListener):void;
+    addEventListener(type: WindowEventType, listener: WindowEvenListener): void;
+
     /**
      * 移除窗口事件
      * @param type
      * @param listener
      */
-    removeEventListener(type:WindowEventType,listener:WindowEvenListener):void;
+    removeEventListener(type: WindowEventType, listener: WindowEvenListener): void;
 
     /**
      * 发布窗口事件
      * @param type
      * @param event
      */
-    pushEvent(type:WindowEventType,event:WindowEvent):void;
+    pushEvent(type: WindowEventType, event: WindowEvent): void;
 }
+
+
+export type FileClipboardListener = (fileClipboard: FileClipboard) => void;
 
 /**
  * 文件剪切板
  */
-export interface Clipboard {
-    type: ClipboardType,
-    data: any
-    clear: () =>void
+export interface FileClipboard {
+    get type(): ClipboardType,
+    get data(): {
+        filePath: string
+    } | null,
+    setData(type: ClipboardType, data: { filePath: string }): void;
+    clear: () => void
+    addChangeListener: (listener: FileClipboardListener) => void;
+    removeChangeListener: (listener: FileClipboardListener) => void;
 }
 
 /**
@@ -316,7 +334,7 @@ export interface OsApi {
      * @param op 窗口参数
      * @param args 窗口args 额外参数
      */
-    creatWindow(op: WindowOption,args?:any): WapWindow
+    creatWindow(op: WindowOption, args?: any): WapWindow
 
     /**
      * 获取WapWindow 实例
@@ -344,47 +362,47 @@ export interface OsApi {
     /**
      * 文件剪切板
      */
-    fileClipboard(): Clipboard
+    fileClipboard(): FileClipboard
 
     /**
      * 打开一个文件
      * @param filePath 文件路径
      */
-    openFile(filePath:string,wapId?:string,def?:boolean):void
+    openFile(filePath: string, wapId?: string, def?: boolean): void
 
     /**
      * 文件打开方式
      * @param filePath 文件路径
      */
-    openFileMode(filePath:string):void
+    openFileMode(filePath: string): void
 
     /**
      * 消息弹窗
      * @param op 弹窗参数
      * @param call 回调函数
      */
-    messageBox(op: MessageBoxOption):Promise<boolean>
+    messageBox(op: MessageBoxOption): Promise<boolean>
 
 }
 
 /**
  * 消息弹窗 参数
  */
-export interface MessageBoxOption{
+export interface MessageBoxOption {
     /**
      * 类型
      */
-    type:'info'| 'warn'| 'error',
+    type: 'info' | 'warn' | 'error',
     /**
      * 标题
      */
-    title?:string,
+    title?: string,
     /**
      * 图标
      */
-    icon?:string,
+    icon?: string,
     /**
      * 消息
      */
-    msg:HtmlString
+    msg: HtmlString
 }

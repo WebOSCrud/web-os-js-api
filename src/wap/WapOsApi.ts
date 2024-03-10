@@ -1,4 +1,4 @@
-import {Clipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
+import {FileClipboard, ContextMenu, Menu, MessageBoxOption, OsApi, WapWindow, WindowOption} from "../os.type";
 import {FileOpenWapInfoListVo} from "../api/os.vo.type";
 
 
@@ -39,7 +39,7 @@ export default class OsApiImpl implements OsApi {
         return this.getWindow(this._windowId);
     }
 
-    fileClipboard(): Clipboard {
+    fileClipboard(): FileClipboard {
         return this.getOsApiImpl().fileClipboard();
     }
 
