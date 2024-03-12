@@ -1,7 +1,7 @@
 import {ClipboardType, FileClipboard, FileClipboardListener} from "./os.type";
 
 export default class ClipboardImpl implements FileClipboard {
-    private _data:{filePath:string}|null = null;
+    private _data:{filePaths:string[]}|null = null;
     private _type: ClipboardType;
     private _listener: FileClipboardListener[] = [];
 
@@ -9,7 +9,7 @@ export default class ClipboardImpl implements FileClipboard {
         this._type = null;
     }
 
-    setData(type: ClipboardType, data: { filePath: string; }): void {
+    setData(type: ClipboardType, data: { filePaths: string[] }): void {
         this._data = data;
         this._type = type;
         for (let i = 0; i < this._listener.length; i++) {

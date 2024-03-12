@@ -5,6 +5,7 @@ import WapOsApi from "./wap/WapOsApi";
 
 export * from "./os.type";
 export * from "./api/index"
+export * from "./api/os.vo.type"
 
 declare global {
     interface Window {

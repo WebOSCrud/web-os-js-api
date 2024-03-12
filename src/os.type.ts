@@ -312,9 +312,9 @@ export type FileClipboardListener = (fileClipboard: FileClipboard) => void;
 export interface FileClipboard {
     get type(): ClipboardType,
     get data(): {
-        filePath: string
+        filePaths: string[]
     } | null,
-    setData(type: ClipboardType, data: { filePath: string }): void;
+    setData(type: ClipboardType, data: { filePaths: string[] }): void;
     clear: () => void
     addChangeListener: (listener: FileClipboardListener) => void;
     removeChangeListener: (listener: FileClipboardListener) => void;

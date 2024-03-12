@@ -36,6 +36,7 @@ export interface FileTypeVo {
     description: string;
     wapId: string;
     iconUrl: string;
+    openWindowIcon: string;
 }
 
 export enum WapWindowType {
